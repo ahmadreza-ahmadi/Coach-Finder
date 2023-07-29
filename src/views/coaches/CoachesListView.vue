@@ -1,3 +1,16 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+</script>
+
 <template>
-  <p>Coaches List View</p>
+  <section>FILTER</section>
+  <section>
+    <div>
+      <button>Refresh</button>
+      <RouterLink to="/register">Register as Coach</RouterLink>
+    </div>
+    <ul>
+      LIST OF COACHES
+    </ul>
+  </section>
 </template>
