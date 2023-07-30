@@ -3,17 +3,17 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 
 const routerLinkClass = computed(() => {
-  return 'border border-transparent transition-all duration-500'
+  return 'relative inline-block transition-all before:transition-all before:content-[""] before:absolute before:opacity-0 before:h-[3px] before:left-0 before:right-0 before:max-w-[40px] before:-bottom-[6px] before:rounded-full before:mx-auto'
 })
 
 const routerLinkActiveClass = computed(() => {
-  return 'inline-block border-b-blue-400 -translate-y-1'
+  return 'before:bg-blue-500 before:opacity-100 -translate-y-1'
 })
 </script>
 
 <template>
   <header class="p-5 bg-blue-50 border-b border-b-blue-300">
-    <nav class="flex items-center justify-between gap-4 max-w-screen-md mx-auto">
+    <nav class="flex items-center justify-between gap-4 max-w-screen-md mx-auto rounded-full">
       <h1 class="text-2xl font-bold"><RouterLink to="/">Find a Coach</RouterLink></h1>
       <ul class="flex items-center gap-5">
         <li>
