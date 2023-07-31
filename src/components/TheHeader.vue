@@ -12,7 +12,7 @@ const routerLinkActiveClass = computed(() => {
 </script>
 
 <template>
-  <header class="p-5 bg-blue-50 border-b border-b-blue-300">
+  <header class="p-5 bg-blue-50 border-b border-b-blue-300 mb-8">
     <nav class="flex items-center justify-between gap-4 max-w-screen-md mx-auto rounded-full">
       <h1 class="text-2xl font-bold"><RouterLink to="/">Find a Coach</RouterLink></h1>
       <ul class="flex items-center gap-5">
