@@ -5,7 +5,7 @@ const formData = reactive({
   firstName: '',
   lastName: '',
   description: '',
-  rate: null,
+  hourlyRate: null,
   areas: []
 })
 
@@ -32,7 +32,7 @@ const submitFrom = () => {
     </div>
     <div>
       <label for="hourly-rate">Hourly Rate</label>
-      <input type="number" id="hourly-rate" v-model.number="formData.rate" />
+      <input type="number" id="hourly-rate" v-model.number="formData.hourlyRate" />
     </div>
     <div>
       <h3>Areas of Expertise</h3>
