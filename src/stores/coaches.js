@@ -1,5 +1,5 @@
-import { ref, computed } from "vue";
-import { defineStore } from "pinia";
+import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
 
 export const useCoachesStore = defineStore('coaches', () => {
   const coaches = ref([
