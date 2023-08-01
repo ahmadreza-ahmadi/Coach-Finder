@@ -1,6 +1,9 @@
 <script setup>
 import { reactive } from 'vue'
 import BaseButton from '@/components/BaseButton.vue'
+
+const emit = defineEmits(['save-data'])
+
 const formData = reactive({
   firstName: '',
   lastName: '',
@@ -12,7 +15,7 @@ const formData = reactive({
 const submitFrom = () => {
   const coachData = { ...formData }
 
-  console.log(coachData)
+  emit('save-data', coachData)
 }
 </script>
 

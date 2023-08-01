@@ -27,5 +27,14 @@ export const useCoachesStore = defineStore('coaches', () => {
     return coaches.value && coaches.value
   })
 
-  return { coaches, hasCoaches }
+  const registerCoach = (coachData) => {
+    const newCoach = {
+      id: Date.now().toString(36),
+      ...coachData
+    }
+
+    coaches.value.unshift(newCoach)
+  }
+
+  return { coaches, hasCoaches, registerCoach }
 })
