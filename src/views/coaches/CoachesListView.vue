@@ -1,21 +1,46 @@
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useCoachesStore } from '../../stores/coaches'
+import { useCoachesStore } from '@/stores/coaches'
+import CoachFilter from '@/components/CoachFilter.vue'
 import BaseContainer from '@/components/BaseContainer.vue'
-import BaseButton from '../../components/BaseButton.vue'
+import BaseButton from '@/components/BaseButton.vue'
 import CoachItem from '@/components/CoachItem.vue'
 
 const { coaches } = storeToRefs(useCoachesStore())
 
-const filteredCoaches = computed(() => {
-  return coaches.value
+const activeFilters = ref({
+  frontend: true,
+  backend: true,
+  career: true
 })
+
+const filteredCoaches = computed(() => {
+  return coaches.value.filter((coach) => {
+    console.log(coach)
+    if (activeFilters.value.frontend && coach.areas.includes('frontend')) {
+      return true
+    }
+    if (activeFilters.value.backend && coach.areas.includes('backend')) {
+      return true
+    }
+    if (activeFilters.value.career && coach.areas.includes('career')) {
+      return true
+    }
+    return false
+  })
+})
+
+const setFilters = (updatedFilters) => {
+  activeFilters.value = updatedFilters
+}
 </script>
 
 <template>
   <section>
-    <BaseContainer>FILTER</BaseContainer>
+    <BaseContainer>
+      <CoachFilter @change-filter="(updatedFilters) => setFilters(updatedFilters)" />
+    </BaseContainer>
   </section>
   <section>
     <BaseContainer>
