@@ -1,6 +1,11 @@
 <script setup>
 import { ref, reactive } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useRequestsStore } from '@/stores/requests.js'
 import BaseButton from '@/components/BaseButton.vue'
+
+const route = useRoute()
+const router = useRouter()
 
 const formData = reactive({
   email: {
@@ -37,6 +42,15 @@ const submitForm = () => {
   for (const data in formData) {
     validateInput(data)
   }
+
+  const requestsStore = useRequestsStore()
+  requestsStore.addRequest({
+    coachId: route.params.id,
+    email: formData.email.value,
+    message: formData.message.value
+  })
+
+  router.replace('/')
 }
 </script>
 
