@@ -16,7 +16,7 @@ const saveData = (coachData) => {
 <template>
   <BaseContainer>
     <section>
-      <h2>Register as a coach now!</h2>
+      <h2 class="text-3xl mx-auto text-center font-bold mb-6">Register as a coach now!</h2>
       <CoachForm @save-data="saveData" />
     </section>
   </BaseContainer>
