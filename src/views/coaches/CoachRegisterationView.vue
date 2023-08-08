@@ -1,14 +1,17 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { useCoachesStore } from '@/stores/coaches'
+import { useAuthStore } from '@/stores/auth'
 import BaseContainer from '@/components/BaseContainer.vue'
 import CoachForm from '@/components/CoachForm.vue'
 
 const router = useRouter()
 const coachesStore = useCoachesStore()
+const authStore = useAuthStore()
 
 const saveData = (coachData) => {
   coachesStore.registerCoach(coachData)
+  authStore.setCoachId(coachData.id)
   router.replace('/')
 }
 </script>

@@ -56,6 +56,7 @@ const submitFrom = () => {
   }
 
   const newCoach = {
+    id: Date.now().toString(36),
     firstName: formData.firstName.value,
     lastName: formData.lastName.value,
     description: formData.description.value,

@@ -29,7 +29,6 @@ export const useCoachesStore = defineStore('coaches', () => {
 
   const registerCoach = (coachData) => {
     const newCoach = {
-      id: Date.now().toString(36),
       ...coachData
     }
 
