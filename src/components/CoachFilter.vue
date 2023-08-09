@@ -24,18 +24,32 @@ const setFilter = (event) => {
 
 <template>
   <BaseContainer>
-    <h2>Filter Your Coach</h2>
-    <span>
-      <input type="checkbox" name="frontend" id="frontend" checked @change="setFilter" />
-      <label for="frontend">Frontend</label>
-    </span>
-    <span>
-      <input type="checkbox" name="backend" id="backend" checked @change="setFilter" />
-      <label for="backend">Backend</label>
-    </span>
-    <span>
-      <input type="checkbox" name="career" id="career" checked @change="setFilter" />
-      <label for="career">Career</label>
-    </span>
+    <h2 class="text-xl font-bold">Filter Your Coach</h2>
+    <div class="flex gap-4">
+      <span>
+        <input
+          type="checkbox"
+          name="frontend"
+          id="frontend"
+          checked
+          @change="setFilter"
+          class="mr-1" />
+        <label for="frontend">Frontend</label>
+      </span>
+      <span>
+        <input
+          type="checkbox"
+          name="backend"
+          id="backend"
+          checked
+          @change="setFilter"
+          class="mr-1" />
+        <label for="backend">Backend</label>
+      </span>
+      <span>
+        <input type="checkbox" name="career" id="career" checked @change="setFilter" class="mr-1" />
+        <label for="career">Career</label>
+      </span>
+    </div>
   </BaseContainer>
 </template>
