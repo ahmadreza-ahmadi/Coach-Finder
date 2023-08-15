@@ -1,11 +1,8 @@
 <script setup>
 import { ref, reactive } from 'vue'
-import { useAuthStore } from '@/stores/auth'
 import BaseButton from '@/components/BaseButton.vue'
 
 const emit = defineEmits(['save-data'])
-
-const authStore = useAuthStore()
 
 const formData = reactive({
   firstName: {
@@ -59,7 +56,6 @@ const submitFrom = () => {
   }
 
   const newCoach = {
-    id: authStore.userId,
     firstName: formData.firstName.value,
     lastName: formData.lastName.value,
     description: formData.description.value,

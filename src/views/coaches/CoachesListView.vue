@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCoachesStore } from '@/stores/coaches'
 import CoachFilter from '@/components/CoachFilter.vue'
@@ -7,12 +7,24 @@ import BaseContainer from '@/components/BaseContainer.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CoachItem from '@/components/CoachItem.vue'
 
-const { coaches } = storeToRefs(useCoachesStore())
+const coachesStore = useCoachesStore()
+const { coaches } = storeToRefs(coachesStore)
 
+const isLoading = ref(false)
 const activeFilters = ref({
   frontend: true,
   backend: true,
   career: true
+})
+
+const loadCoaches = async () => {
+  isLoading.value = true
+  await coachesStore.loadCoaches()
+  isLoading.value = false
+}
+
+onMounted(() => {
+  loadCoaches()
 })
 
 const filteredCoaches = computed(() => {
@@ -44,10 +56,11 @@ const setFilters = (updatedFilters) => {
   <section>
     <BaseContainer>
       <div class="flex items-center justify-between mb-4">
-        <BaseButton mode="outline">Refresh</BaseButton>
+        <BaseButton mode="outline" @click="loadCoaches">Refresh</BaseButton>
         <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
       </div>
-      <ul v-if="filteredCoaches.length" class="flex flex-col gap-6">
+      <p v-if="isLoading">Loading...</p>
+      <ul v-else-if="filteredCoaches.length" class="flex flex-col gap-6">
         <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :coach="coach" />
       </ul>
       <p v-else>No coach found!</p>

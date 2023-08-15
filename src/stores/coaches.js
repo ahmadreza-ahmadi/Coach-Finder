@@ -7,30 +7,39 @@ const authStore = useAuthStore()
 
 export const useCoachesStore = defineStore('coaches', () => {
   const userId = ref(authStore.userId)
-  const coaches = ref([
-    {
-      id: 'c1',
-      firstName: 'Maximilian',
-      lastName: 'Schwarzmüller',
-      areas: ['frontend', 'backend', 'career'],
-      description:
-        "I'm Maximilian and I've worked as a freelance web developer for years. Let me help you become a developer as well!",
-      hourlyRate: 30
-    },
-    {
-      id: 'c2',
-      firstName: 'Julie',
-      lastName: 'Jones',
-      areas: ['frontend', 'career'],
-      description:
-        'I am Julie and as a senior developer in a big tech company, I can help you get your first job or progress in your current role.',
-      hourlyRate: 30
-    }
-  ])
+  const coaches = ref([])
 
   const hasCoaches = computed(() => {
     return coaches.value && coaches.value
   })
+
+  const setCoaches = (coachesList) => {
+    coaches.value = coachesList
+  }
+
+  const loadCoaches = async () => {
+    const response = await axios.get(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches.json`)
+    const responseData = await response.data
+
+    if (response.statusText !== "OK") {
+      // Error handling
+    }
+
+    const coaches = []
+    for (const coachId in responseData) {
+      const coach = {
+        id: coachId,
+        firstName: responseData[coachId].firstName,
+        lastName: responseData[coachId].lastName,
+        areas: responseData[coachId].areas,
+        description: responseData[coachId].description,
+        hourlyRate: responseData[coachId].hourlyRate
+      }
+      coaches.push(coach)
+    }
+
+    setCoaches(coaches)
+  }
 
   const registerCoach = async (coachData) => {
     const newCoach = {
@@ -42,9 +51,7 @@ export const useCoachesStore = defineStore('coaches', () => {
     if (response.statusText !== "OK") {
       // Error handling
     }
-
-    coaches.value.unshift(newCoach)
   }
 
-  return { coaches, hasCoaches, registerCoach }
+  return { coaches, hasCoaches, registerCoach, loadCoaches }
 })
