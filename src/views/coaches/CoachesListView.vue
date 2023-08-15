@@ -5,6 +5,7 @@ import { useCoachesStore } from '@/stores/coaches'
 import CoachFilter from '@/components/CoachFilter.vue'
 import BaseContainer from '@/components/BaseContainer.vue'
 import BaseButton from '@/components/BaseButton.vue'
+import BaseSpinner from '@/components/BaseSpinner.vue'
 import CoachItem from '@/components/CoachItem.vue'
 
 const coachesStore = useCoachesStore()
@@ -59,7 +60,7 @@ const setFilters = (updatedFilters) => {
         <BaseButton mode="outline" @click="loadCoaches">Refresh</BaseButton>
         <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
       </div>
-      <p v-if="isLoading">Loading...</p>
+      <BaseSpinner v-if="isLoading" />
       <ul v-else-if="filteredCoaches.length" class="flex flex-col gap-6">
         <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :coach="coach" />
       </ul>
