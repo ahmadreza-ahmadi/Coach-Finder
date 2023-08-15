@@ -22,7 +22,8 @@ export const useCoachesStore = defineStore('coaches', () => {
     const responseData = await response.data
 
     if (response.statusText !== "OK") {
-      // Error handling
+      const error = new Error(responseData.message || 'Faild to fetch.')
+      throw error
     }
 
     const coaches = []
@@ -46,10 +47,10 @@ export const useCoachesStore = defineStore('coaches', () => {
       ...coachData
     }
 
-    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json`, newCoach)
+    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.jsosn`, newCoach)
 
     if (response.statusText !== "OK") {
-      // Error handling
+      console.log(response.data.message)
     }
   }
 

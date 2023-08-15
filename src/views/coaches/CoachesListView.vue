@@ -12,6 +12,7 @@ const coachesStore = useCoachesStore()
 const { coaches } = storeToRefs(coachesStore)
 
 const isLoading = ref(false)
+
 const activeFilters = ref({
   frontend: true,
   backend: true,
@@ -20,7 +21,11 @@ const activeFilters = ref({
 
 const loadCoaches = async () => {
   isLoading.value = true
-  await coachesStore.loadCoaches()
+  try {
+    await coachesStore.loadCoaches()
+  } catch (error) {
+    alert(error.message || 'Something went wrong.')
+  }
   isLoading.value = false
 }
 
