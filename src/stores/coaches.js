@@ -1,7 +1,12 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import axios from 'axios'
+import { useAuthStore } from '@/stores/auth.js'
+
+const authStore = useAuthStore()
 
 export const useCoachesStore = defineStore('coaches', () => {
+  const userId = ref(authStore.userId)
   const coaches = ref([
     {
       id: 'c1',
@@ -27,9 +32,15 @@ export const useCoachesStore = defineStore('coaches', () => {
     return coaches.value && coaches.value
   })
 
-  const registerCoach = (coachData) => {
+  const registerCoach = async (coachData) => {
     const newCoach = {
       ...coachData
+    }
+
+    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json`, newCoach)
+
+    if (response.statusText !== "OK") {
+      // Error handling
     }
 
     coaches.value.unshift(newCoach)

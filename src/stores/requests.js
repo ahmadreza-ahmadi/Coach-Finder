@@ -2,12 +2,14 @@ import { defineStore, storeToRefs } from "pinia";
 import { ref, computed } from "vue";
 import { useAuthStore } from '@/stores/auth.js'
 
-const { coachId } = storeToRefs(useAuthStore())
+const authStore = useAuthStore()
+
+const { userId } = storeToRefs(authStore)
 
 export const useRequestsStore = defineStore('requests', () => {
   const requests = ref([])
 
-  const filteredRequests = computed(() => requests.value.filter((request) => request.coachId === coachId.value))
+  const filteredRequests = computed(() => requests.value.filter((request) => request.userId === userId.value))
 
   const hasRequests = computed(() => {
     return filteredRequests.value && filteredRequests.value.length > 0

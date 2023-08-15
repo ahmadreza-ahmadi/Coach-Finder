@@ -2,14 +2,12 @@
 import { ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useCoachesStore } from '@/stores/coaches'
-import { useAuthStore } from '@/stores/auth'
 import CoachFilter from '@/components/CoachFilter.vue'
 import BaseContainer from '@/components/BaseContainer.vue'
 import BaseButton from '@/components/BaseButton.vue'
 import CoachItem from '@/components/CoachItem.vue'
 
 const { coaches } = storeToRefs(useCoachesStore())
-const { coachId } = storeToRefs(useAuthStore())
 
 const activeFilters = ref({
   frontend: true,
@@ -19,7 +17,6 @@ const activeFilters = ref({
 
 const filteredCoaches = computed(() => {
   return coaches.value.filter((coach) => {
-    console.log(coach)
     if (activeFilters.value.frontend && coach.areas.includes('frontend')) {
       return true
     }
@@ -48,7 +45,7 @@ const setFilters = (updatedFilters) => {
     <BaseContainer>
       <div class="flex items-center justify-between mb-4">
         <BaseButton mode="outline">Refresh</BaseButton>
-        <BaseButton type="router-link" to="/register" v-if="!coachId">Register as Coach</BaseButton>
+        <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
       </div>
       <ul v-if="filteredCoaches.length" class="flex flex-col gap-6">
         <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :coach="coach" />
