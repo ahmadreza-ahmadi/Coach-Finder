@@ -47,7 +47,7 @@ export const useCoachesStore = defineStore('coaches', () => {
       ...coachData
     }
 
-    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.jsos`, newCoach)
+    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json`, newCoach)
 
     if (response.statusText !== "OK") {
       console.log(response.data.message)
