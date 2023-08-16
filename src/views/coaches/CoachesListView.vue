@@ -17,9 +17,9 @@ const activeFilters = ref({
   career: true
 })
 
-const loadCoaches = async () => {
+const loadCoaches = async (refresh = false) => {
   try {
-    await coachesStore.loadCoaches()
+    await coachesStore.loadCoaches(refresh)
   } catch (error) {
     alert(error.message || 'Something went wrong.')
   }
@@ -30,7 +30,7 @@ onMounted(() => {
 })
 
 watch(dataIsSending, () => {
-  loadCoaches()
+  loadCoaches(true)
 })
 
 const filteredCoaches = computed(() => {
@@ -62,7 +62,7 @@ const setFilters = (updatedFilters) => {
   <section>
     <BaseContainer>
       <div class="flex items-center justify-between mb-4">
-        <BaseButton mode="outline" @click="loadCoaches">Refresh</BaseButton>
+        <BaseButton mode="outline" @click="loadCoaches(true)">Refresh</BaseButton>
         <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
       </div>
       <BaseSpinner v-if="dataIsLoading || dataIsSending" />

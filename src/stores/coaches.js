@@ -8,6 +8,7 @@ const authStore = useAuthStore()
 export const useCoachesStore = defineStore('coaches', () => {
   const userId = ref(authStore.userId)
   const coaches = ref([])
+  const lastFetch = ref(null)
   const dataIsLoading = ref(false)
   const dataIsSending = ref(false)
 
@@ -15,11 +16,28 @@ export const useCoachesStore = defineStore('coaches', () => {
     return coaches.value && coaches.value
   })
 
+  const shouldUpdate = computed(() => {
+    if (!lastFetch.value) {
+      return true
+    }
+
+    const currentTimestamp = new Date().getTime()
+    return (currentTimestamp - lastFetch.value) / 1000 > 60
+  })
+
   const setCoaches = (coachesList) => {
     coaches.value = coachesList
   }
 
-  const loadCoaches = async () => {
+  const setFetchTimestamp = () => {
+    lastFetch.value = new Date().getTime()
+  }
+
+  const loadCoaches = async (forceRefresh) => {
+    if (!shouldUpdate.value && !forceRefresh) {
+      return
+    }
+
     dataIsLoading.value = true
 
     const response = await axios.get(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches.json`)
@@ -44,6 +62,8 @@ export const useCoachesStore = defineStore('coaches', () => {
     }
 
     setCoaches(coaches)
+
+    setFetchTimestamp()
 
     dataIsLoading.value = false
   }
