@@ -54,22 +54,24 @@ const setFilters = (updatedFilters) => {
 </script>
 
 <template>
-  <section>
-    <BaseContainer>
-      <CoachFilter @change-filter="(updatedFilters) => setFilters(updatedFilters)" />
-    </BaseContainer>
-  </section>
-  <section>
-    <BaseContainer>
-      <div class="flex items-center justify-between mb-4">
-        <BaseButton mode="outline" @click="loadCoaches(true)">Refresh</BaseButton>
-        <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
-      </div>
-      <BaseSpinner v-if="dataIsLoading || dataIsSending" />
-      <ul v-else-if="filteredCoaches.length" class="flex flex-col gap-6">
-        <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :coach="coach" />
-      </ul>
-      <p v-else>No coach found!</p>
-    </BaseContainer>
-  </section>
+  <div>
+    <section>
+      <BaseContainer>
+        <CoachFilter @change-filter="(updatedFilters) => setFilters(updatedFilters)" />
+      </BaseContainer>
+    </section>
+    <section>
+      <BaseContainer>
+        <div class="flex items-center justify-between mb-4">
+          <BaseButton mode="outline" @click="loadCoaches(true)">Refresh</BaseButton>
+          <BaseButton type="router-link" to="/register">Register as Coach</BaseButton>
+        </div>
+        <BaseSpinner v-if="dataIsLoading || dataIsSending" />
+        <ul v-else-if="filteredCoaches.length" class="flex flex-col gap-6">
+          <CoachItem v-for="coach in filteredCoaches" :key="coach.id" :coach="coach" />
+        </ul>
+        <p v-else>No coach found!</p>
+      </BaseContainer>
+    </section>
+  </div>
 </template>
