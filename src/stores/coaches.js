@@ -8,6 +8,8 @@ const authStore = useAuthStore()
 export const useCoachesStore = defineStore('coaches', () => {
   const userId = ref(authStore.userId)
   const coaches = ref([])
+  const dataIsLoading = ref(false)
+  const dataIsSending = ref(false)
 
   const hasCoaches = computed(() => {
     return coaches.value && coaches.value
@@ -18,6 +20,8 @@ export const useCoachesStore = defineStore('coaches', () => {
   }
 
   const loadCoaches = async () => {
+    dataIsLoading.value = true
+
     const response = await axios.get(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches.json`)
     const responseData = await response.data
 
@@ -40,6 +44,8 @@ export const useCoachesStore = defineStore('coaches', () => {
     }
 
     setCoaches(coaches)
+
+    dataIsLoading.value = false
   }
 
   const registerCoach = async (coachData) => {
@@ -47,12 +53,14 @@ export const useCoachesStore = defineStore('coaches', () => {
       ...coachData
     }
 
+    dataIsSending.value = true
     const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json`, newCoach)
+    dataIsSending.value = false
 
     if (response.statusText !== "OK") {
       console.log(response.data.message)
     }
   }
 
-  return { coaches, hasCoaches, registerCoach, loadCoaches }
+  return { coaches, dataIsLoading, dataIsSending, hasCoaches, registerCoach, loadCoaches }
 })
