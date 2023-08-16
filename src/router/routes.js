@@ -27,6 +27,10 @@ const routes = [
     component: () => import('@/views/requests/RequestsReceivedView.vue')
   },
   {
+    path: '/auth',
+    component: () => import('@/views/auth/UserAuth.vue')
+  },
+  {
     path: '/:notFound(.*)*',
     component: () => import('@/views/NotFoundView.vue')
   }

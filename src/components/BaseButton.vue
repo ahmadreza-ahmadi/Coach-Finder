@@ -30,10 +30,10 @@ const finalClass = computed(() => {
 </script>
 
 <template>
-  <button v-if="props.type === 'button'" :class="finalClass">
-    <slot></slot>
-  </button>
-  <RouterLink v-else-if="props.type === 'router-link'" :to="props.to" :class="finalClass">
+  <RouterLink v-if="props.type === 'router-link'" :to="props.to" :class="finalClass">
     <slot></slot>
   </RouterLink>
+  <button v-else :type="props.type" :class="finalClass">
+    <slot></slot>
+  </button>
 </template>
