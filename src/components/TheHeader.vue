@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import BaseButton from '@/components/BaseButton.vue'
 
 const authStore = useAuthStore()
 
@@ -12,6 +13,8 @@ const routerLinkClass = computed(() => {
 const routerLinkActiveClass = computed(() => {
   return 'before:bg-blue-500 before:opacity-100 -translate-y-1'
 })
+
+const logout = () => authStore.logout()
 </script>
 
 <template>
@@ -24,13 +27,18 @@ const routerLinkActiveClass = computed(() => {
             >All Coaches</RouterLink
           >
         </li>
-        <li v-if="authStore">
+        <li v-if="authStore.isAuthenticated">
           <RouterLink to="/requests" :class="routerLinkClass" :active-class="routerLinkActiveClass"
             >Requests</RouterLink
           >
         </li>
         <li v-else>
-          <RouterLink to="/auth"> Login </RouterLink>
+          <RouterLink to="/auth" :class="routerLinkClass" :active-class="routerLinkActiveClass">
+            Login
+          </RouterLink>
+        </li>
+        <li v-if="authStore.isAuthenticated">
+          <BaseButton @click="logout">Logout</BaseButton>
         </li>
       </ul>
     </nav>
