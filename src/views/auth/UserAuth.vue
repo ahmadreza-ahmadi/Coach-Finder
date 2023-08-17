@@ -1,9 +1,13 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
 import BaseContainer from '@/components/BaseContainer.vue'
 import BaseButton from '@/components/BaseButton.vue'
 
+const authStore = useAuthStore()
+
 const mode = ref('login')
+const errorMessage = ref(null)
 const formData = reactive({
   email: '',
   password: ''
@@ -24,7 +28,20 @@ const switchAuthMode = () => {
   else mode.value = 'login'
 }
 
-const submitForm = () => {}
+const submitForm = async () => {
+  try {
+    if (mode.value === 'login') {
+      // ...
+    } else {
+      await authStore.signup({
+        email: formData.email,
+        password: formData.password
+      })
+    }
+  } catch (error) {
+    errorMessage.value = error
+  }
+}
 </script>
 
 <template>
@@ -47,5 +64,6 @@ const submitForm = () => {}
     </form>
     <p>Email: {{ formData.email }}</p>
     <p>Password: {{ formData.password }}</p>
+    <p class="text-red-500">{{ errorMessage }}</p>
   </BaseContainer>
 </template>
