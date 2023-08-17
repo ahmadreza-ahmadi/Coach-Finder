@@ -1,8 +1,10 @@
 <script setup>
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import BaseButton from '@/components/BaseButton.vue'
+
+const router = useRouter()
 
 const authStore = useAuthStore()
 
@@ -14,7 +16,10 @@ const routerLinkActiveClass = computed(() => {
   return 'before:bg-blue-500 before:opacity-100 -translate-y-1'
 })
 
-const logout = () => authStore.logout()
+const logout = () => {
+  authStore.logout()
+  router.replace('/coaches')
+}
 </script>
 
 <template>

@@ -20,15 +20,18 @@ const routes = [
   },
   {
     path: '/register',
-    component: () => import('@/views/coaches/CoachRegisterationView.vue')
+    component: () => import('@/views/coaches/CoachRegisterationView.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/requests',
-    component: () => import('@/views/requests/RequestsReceivedView.vue')
+    component: () => import('@/views/requests/RequestsReceivedView.vue'),
+    meta: { requiresAuth: true }
   },
   {
     path: '/auth',
-    component: () => import('@/views/auth/UserAuth.vue')
+    component: () => import('@/views/auth/UserAuth.vue'),
+    meta: { requiresUnauth: true }
   },
   {
     path: '/:notFound(.*)*',

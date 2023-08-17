@@ -71,7 +71,7 @@ const submitForm = () => {
     </div>
     <p v-if="!formIsValid">** Please fix the above errors and submit again. **</p>
     <div>
-      <BaseButton>Send Message</BaseButton>
+      <BaseButton type="submit">Send Message</BaseButton>
     </div>
   </form>
 </template>

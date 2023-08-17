@@ -1,8 +1,12 @@
 <script setup>
 import { ref, reactive, computed } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
 import BaseContainer from '@/components/BaseContainer.vue'
 import BaseButton from '@/components/BaseButton.vue'
+
+const route = useRoute()
+const router = useRouter()
 
 const authStore = useAuthStore()
 
@@ -41,6 +45,8 @@ const submitForm = async () => {
         password: formData.password
       })
     }
+    const redirectUrl = `/${route.query.redirect || 'coaches'}`
+    router.replace(redirectUrl)
   } catch (error) {
     errorMessage.value = error
   }

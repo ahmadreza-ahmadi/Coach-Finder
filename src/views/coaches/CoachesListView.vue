@@ -68,7 +68,9 @@ const setFilters = (updatedFilters) => {
       <BaseContainer>
         <div class="flex items-center justify-between mb-4">
           <BaseButton mode="outline" @click="loadCoaches(true)">Refresh</BaseButton>
-          <BaseButton v-if="!isAuthenticated" type="router-link" to="/auth">Login</BaseButton>
+          <BaseButton v-if="!isAuthenticated" type="router-link" to="/auth?redirect=register"
+            >Login to Register as a coach</BaseButton
+          >
           <BaseButton v-if="!dataIsLoading && isAuthenticated" type="router-link" to="/register"
             >Register as Coach</BaseButton
           >
