@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
@@ -6,6 +6,10 @@ export const useAuthStore = defineStore('auth', () => {
   const userId = ref(null)
   const token = ref(null)
   const tokenExpiration = ref(null)
+
+  const isAuthenticated = computed(() => {
+    return !!token.value
+  })
 
   const setUser = (userData) => {
     userId.value = userData.localId
@@ -53,5 +57,5 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
-  return { userId, token, tokenExpiration, login, signup }
+  return { userId, token, tokenExpiration, isAuthenticated, login, signup }
 })
