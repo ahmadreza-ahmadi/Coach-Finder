@@ -9,12 +9,18 @@ import RequestItem from '@/components/RequestItem.vue'
 const requestsStore = useRequestsStore()
 const { requests, hasRequests } = storeToRefs(requestsStore)
 
+const errorMessage = ref(null)
 const isLoading = ref(false)
 
 const loadRequests = async () => {
   isLoading.value = true
-  await requestsStore.fetchRequests()
-  isLoading.value = false
+  try {
+    await requestsStore.fetchRequests()
+  } catch (error) {
+    errorMessage.value = error.response.data.error
+  } finally {
+    isLoading.value = false
+  }
 }
 
 onMounted(() => {
@@ -32,6 +38,7 @@ onMounted(() => {
       <ul v-else-if="hasRequests">
         <RequestItem v-for="request in requests" :key="request.id" :request="request" />
       </ul>
+      <p v-else-if="errorMessage">{{ errorMessage }}</p>
       <h3 v-else>You haven't recieved any requests yet!</h3>
     </BaseContainer>
   </section>

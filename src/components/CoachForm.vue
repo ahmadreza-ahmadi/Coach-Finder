@@ -181,7 +181,7 @@ const submitFrom = () => {
         ** Please fix the above errors and submit again. **
       </p>
     </Transition>
-    <BaseButton>Register</BaseButton>
+    <BaseButton type="submit">Register</BaseButton>
   </form>
 </template>
 

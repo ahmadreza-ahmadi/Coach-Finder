@@ -1,16 +1,18 @@
-import { defineStore, storeToRefs } from "pinia";
-import { ref, computed } from "vue";
-import { useAuthStore } from '@/stores/auth.js'
-import axios from "axios";
+import { defineStore, storeToRefs } from 'pinia'
+import { ref, computed } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import axios from 'axios'
 
 const authStore = useAuthStore()
 
-const { userId } = storeToRefs(authStore)
+const { userId, token } = storeToRefs(authStore)
 
 export const useRequestsStore = defineStore('requests', () => {
   const requests = ref([])
 
-  const filteredRequests = computed(() => requests.value.filter((request) => request.userId === userId.value))
+  const filteredRequests = computed(() =>
+    requests.value.filter((request) => request.userId === userId.value)
+  )
 
   const hasRequests = computed(() => {
     return requests.value && requests.value.length > 0
@@ -22,7 +24,10 @@ export const useRequestsStore = defineStore('requests', () => {
       message: requestData.message
     }
 
-    const response = await axios.post(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/requests/${requestData.coachId}.json`, newRequest)
+    const response = await axios.post(
+      `https://vue-http-demo-f1200-default-rtdb.firebaseio.com/requests/${requestData.coachId}.json`,
+      newRequest
+    )
     const responseData = await response.data
 
     if (response.statusText !== 'OK') {
@@ -40,12 +45,10 @@ export const useRequestsStore = defineStore('requests', () => {
   }
 
   const fetchRequests = async () => {
-    const response = await axios.get(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/requests/${userId.value}.json`)
+    const response = await axios.get(
+      `https://vue-http-demo-f1200-default-rtdb.firebaseio.com/requests/${userId.value}.json?auth=${token.value}`
+    )
     const responseData = await response.data
-
-    if (response.statusText !== 'OK') {
-      // Error
-    }
 
     const formattedRequests = []
     for (const key in responseData) {

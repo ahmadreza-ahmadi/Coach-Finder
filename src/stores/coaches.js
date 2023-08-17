@@ -1,12 +1,12 @@
 import { ref, computed } from 'vue'
-import { defineStore } from 'pinia'
+import { defineStore, storeToRefs } from 'pinia'
 import axios from 'axios'
 import { useAuthStore } from '@/stores/auth.js'
 
 const authStore = useAuthStore()
 
 export const useCoachesStore = defineStore('coaches', () => {
-  const userId = ref(authStore.userId)
+  const { userId, token } = storeToRefs(authStore)
   const coaches = ref([])
   const lastFetch = ref(null)
   const dataIsLoading = ref(false)
@@ -40,10 +40,12 @@ export const useCoachesStore = defineStore('coaches', () => {
 
     dataIsLoading.value = true
 
-    const response = await axios.get(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches.json`)
+    const response = await axios.get(
+      `https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches.json`
+    )
     const responseData = await response.data
 
-    if (response.statusText !== "OK") {
+    if (response.statusText !== 'OK') {
       const error = new Error(responseData.message || 'Faild to fetch.')
       throw error
     }
@@ -74,10 +76,13 @@ export const useCoachesStore = defineStore('coaches', () => {
     }
 
     dataIsSending.value = true
-    const response = await axios.put(`https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json`, newCoach)
+    const response = await axios.put(
+      `https://vue-http-demo-f1200-default-rtdb.firebaseio.com/coaches/${userId.value}.json?auth=${token.value}`,
+      newCoach
+    )
     dataIsSending.value = false
 
-    if (response.statusText !== "OK") {
+    if (response.statusText !== 'OK') {
       console.log(response.data.message)
     }
   }
