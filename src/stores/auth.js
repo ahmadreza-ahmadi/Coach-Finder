@@ -13,8 +13,25 @@ export const useAuthStore = defineStore('auth', () => {
     tokenExpiration.value = userData.expiresIn
   }
 
-  const login = () => {
-    // TODO: Implement the login flow here
+  const login = async (userData) => {
+    const newUser = {
+      email: userData.email,
+      password: userData.password,
+      returnSecureToken: true
+    }
+
+    try {
+      const res = await axios.post(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD39nnJhZedW2OZuDFwqRMirDvh0AdEdYg`,
+        newUser
+      )
+      const resData = await res.data
+      console.log(resData)
+
+      setUser(resData)
+    } catch (error) {
+      throw new Error(error.response.data.error.message)
+    }
   }
 
   const signup = async (userData) => {

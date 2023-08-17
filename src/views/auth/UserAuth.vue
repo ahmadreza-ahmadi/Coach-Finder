@@ -31,7 +31,10 @@ const switchAuthMode = () => {
 const submitForm = async () => {
   try {
     if (mode.value === 'login') {
-      // ...
+      await authStore.login({
+        email: formData.email,
+        password: formData.password
+      })
     } else {
       await authStore.signup({
         email: formData.email,
